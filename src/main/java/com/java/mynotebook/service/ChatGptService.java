@@ -1,6 +1,7 @@
 package com.java.mynotebook.service;
 
-import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
 import com.java.mynotebook.entity.gpt.ChatGptMessage;
 import com.java.mynotebook.entity.gpt.ChatGptRequestParameter;
 import com.java.mynotebook.entity.gpt.ChatGptResponseParameter;
@@ -63,12 +64,14 @@ public class ChatGptService {
         chatGptRequestParameter.addMessages(new ChatGptMessage("user", question));
 
         // 创建一个JSONObject，用于解析和创建json
-        JSONObject requestJson = new JSONObject(chatGptRequestParameter);
-        System.out.println("请求参数：" + requestJson);
+//        JSONObject requestJson = new JSONObject(chatGptRequestParameter);
+        Object toJSON = JSON.toJSON(chatGptRequestParameter);
+
+        System.out.println("请求参数：" + toJSON);
         HttpEntity httpEntity = null;
         try {
             // 对象转换为json字符串
-            httpEntity = new StringEntity(requestJson.toString());
+            httpEntity = new StringEntity(toJSON.toString());
         } catch (Exception e) {
             System.out.println(question + "->json转换异常");
             return null;
@@ -92,9 +95,9 @@ public class ChatGptService {
             return client.execute(httpPost, response -> {
                 // 得到返回的内容
                 String resStr = EntityUtils.toString(response.getEntity(), charset);
+                Object resJSON = JSON.toJSON(resStr);
                 // 转换为对象
-                JSONObject responseJson = new JSONObject(resStr);
-                ChatGptResponseParameter responseParameter = responseJson.getBean(resStr, ChatGptResponseParameter.class);
+                ChatGptResponseParameter responseParameter = JSONObject.toJavaObject((com.alibaba.fastjson.JSON) resJSON, ChatGptResponseParameter.class);
                 String ans = "";
                 // 遍历所有的Choices（一般都只有一个）
                 for (Choices choice : responseParameter.getChoices()) {

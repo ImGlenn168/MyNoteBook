@@ -1,7 +1,6 @@
 package com.java.mynotebook.swing.ai;
 
 
-import cn.hutool.core.util.StrUtil;
 import com.java.mynotebook.service.ChatGptService;
 import com.java.mynotebook.swing.common.MsgFrame;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -61,7 +60,7 @@ public class ChatUI extends JFrame {
     public boolean validation() {
         boolean flag = true;
         String message = this.inputField.getText().trim();
-        if (StrUtil.isBlank(message)) {
+        if ("".equals(message)) {
             flag = false;
             new MsgFrame("消息不能为空！");
             return flag;

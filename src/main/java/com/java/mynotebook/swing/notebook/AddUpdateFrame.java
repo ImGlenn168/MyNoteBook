@@ -1,6 +1,5 @@
 package com.java.mynotebook.swing.notebook;
 
-import cn.hutool.core.util.StrUtil;
 import com.java.mynotebook.controller.api.NoteBookApi;
 import com.java.mynotebook.controller.impl.NoteBookController;
 import com.java.mynotebook.entity.NoteBook;
@@ -183,7 +182,7 @@ public class AddUpdateFrame extends JFrame {
         String name = this.word.getText().trim();
         String tel = this.meaning.getText().trim();
         String weChat = this.sentence.getText().trim();
-        if (StrUtil.isBlank(name) || StrUtil.isBlank(tel) || StrUtil.isBlank(weChat)) {
+        if ("".equals(name) || "".equals(tel) || "".equals(weChat)) {
             flag = false;
             new MsgFrame("属性不能为空！");
             return flag;
