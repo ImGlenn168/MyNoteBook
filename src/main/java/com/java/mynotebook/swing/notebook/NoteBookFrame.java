@@ -1,10 +1,11 @@
 package com.java.mynotebook.swing.notebook;
 
-import com.java.mynotebook.controller.NoteBookApi;
-import com.java.mynotebook.controller.NoteBookController;
+import com.java.mynotebook.controller.api.NoteBookApi;
+import com.java.mynotebook.controller.impl.NoteBookController;
 import com.java.mynotebook.entity.NoteBook;
 import com.java.mynotebook.swing.ai.ChatUI;
 import com.java.mynotebook.swing.common.MsgFrame;
+import com.java.mynotebook.swing.learn.WebLearnFrame;
 import com.java.mynotebook.utils.Result;
 
 import javax.swing.*;
@@ -26,7 +27,8 @@ public class NoteBookFrame extends JFrame {
     private JScrollPane rightPane;
 
     private JPanel leftPane, iconPane;
-    private JButton add, del, update, query, export, importFile, followAI;
+    private JButton add, del, update, query, export, importFile, followAI, learn;
+
     private JTextField check;
 
     private JFileChooser jFileChooser;
@@ -84,13 +86,16 @@ public class NoteBookFrame extends JFrame {
         importFile.setBounds(60, 230, 80, 25);
 
         check = new JTextField();
-        check.setBounds(50, 290, 100, 25);
+        check.setBounds(50, 280, 100, 25);
 
         query = new JButton("查询");
-        query.setBounds(60, 325, 80, 25);
+        query.setBounds(60, 315, 80, 25);
 
-        followAI = new JButton("AI 学习");
-        followAI.setBounds(60, 400, 80, 30);
+        learn = new JButton("Learn");
+        learn.setBounds(60, 375, 80, 30);
+
+        followAI = new JButton("ChatGpt");
+        followAI.setBounds(60, 420, 80, 30);
 
 
         // left
@@ -107,6 +112,7 @@ public class NoteBookFrame extends JFrame {
         leftPane.add(importFile);
         leftPane.add(followAI);
         leftPane.add(check);
+        leftPane.add(learn);
         //将leftPane放入jframe界面
         getContentPane().add(leftPane);
 
@@ -158,6 +164,7 @@ public class NoteBookFrame extends JFrame {
         exportWords();
         importWordsFile();
         followAI();
+        webLearn();
         // 关闭窗口时，监听事件
         addWindowListener(new WindowAdapter() {
             @Override
@@ -221,16 +228,29 @@ public class NoteBookFrame extends JFrame {
         export.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String query = check.getText().trim();
-                Result result = noteBookApi.export(query);
-                if (!(boolean) result.getData()) {
-                    new MsgFrame("无数据导出！");
-                } else {
-                    new MsgFrame("文件已存入D:/MyNoteBook.xlsx");
+                jFileChooser = new JFileChooser();
+                int returnVal = jFileChooser.showSaveDialog(noteBookFrame);
+                File currentDirectory = jFileChooser.getCurrentDirectory();
+                // get filePath
+                String absolutePath = currentDirectory.getAbsolutePath();
+                // get fileName
+                File selectedFile = jFileChooser.getSelectedFile();
+                if (selectedFile != null) {
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        String fileName = selectedFile.getName();
+                        String query = check.getText().trim();
+                        Result result = noteBookApi.export(query, absolutePath, fileName);
+                        if (!(boolean) result.getData()) {
+                            new MsgFrame("导出失败！");
+                        } else {
+                            new MsgFrame("保存成功！");
+                        }
+                    }
                 }
             }
         });
     }
+
 
     private void importWordsFile() {
         importFile.addActionListener(new ActionListener() {
@@ -267,7 +287,8 @@ public class NoteBookFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 打开AI学习窗口
-                new ChatUI();
+                ChatUI chatUI = new ChatUI();
+                chatUI.sendMessage();
                 System.out.println("open AI window");
             }
         });
@@ -284,6 +305,17 @@ public class NoteBookFrame extends JFrame {
                 return null;
             }
         }
-        return new NoteBook((String) jTable.getValueAt(row, 0), (String) jTable.getValueAt(row, 1), (String) jTable.getValueAt(row, 2), (String) jTable.getValueAt(row, 3), (String) jTable.getValueAt(row, 4), (String) jTable.getValueAt(row, 5));
+        return new NoteBook((String) jTable.getValueAt(row, 0), (String) jTable.getValueAt(row, 1),
+                (String) jTable.getValueAt(row, 2), (String) jTable.getValueAt(row, 3),
+                (String) jTable.getValueAt(row, 4), (String) jTable.getValueAt(row, 5));
+    }
+
+    private void webLearn() {
+        learn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new WebLearnFrame();
+            }
+        });
     }
 }

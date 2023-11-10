@@ -1,8 +1,8 @@
 package com.java.mynotebook.swing.notebook;
 
 import cn.hutool.core.util.StrUtil;
-import com.java.mynotebook.controller.NoteBookApi;
-import com.java.mynotebook.controller.NoteBookController;
+import com.java.mynotebook.controller.api.NoteBookApi;
+import com.java.mynotebook.controller.impl.NoteBookController;
 import com.java.mynotebook.entity.NoteBook;
 import com.java.mynotebook.swing.common.MsgFrame;
 

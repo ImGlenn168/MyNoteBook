@@ -66,10 +66,14 @@ public class NoteBookService {
         return null;
     }
 
-    public boolean export(String param) {
+    public boolean export(String param, String filePath, String fileName) {
+        if ("".equals(filePath) || filePath == null
+                || "".equals(fileName) || fileName == null) {
+            return false;
+        }
         int count = 0;
         //1、创建一个文件对象
-        File excelFile = new File("D:/MyNoteBook.xlsx");
+        File excelFile = new File(filePath + "\\" + fileName + ".xlsx");
         //2、判断文件是否存在，不存在则创建一个Excel文件
         if (!excelFile.exists()) {
             try {
@@ -88,7 +92,7 @@ public class NoteBookService {
             count = noteBooks.size();
             EasyExcel.write(excelFile, NoteBook.class).sheet("queryNotebook").doWrite(noteBooks);
         }
-        System.out.println("文件已存入D:/MyNoteBook.xlsx");
+        System.out.println("文件已存入" + filePath + "\\" + fileName + ".xlsx");
         return count > 0;
     }
 

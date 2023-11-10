@@ -1,4 +1,4 @@
-package com.java.mynotebook.controller;
+package com.java.mynotebook.controller.api;
 
 import com.java.mynotebook.entity.NoteBook;
 import com.java.mynotebook.utils.Result;
@@ -19,7 +19,7 @@ public interface NoteBookApi {
 
     Result queryNoteBooks(String word);
 
-    Result export(String param);
+    Result export(String param, String filePath, String fileName);
 
     Result importFile(File file);
 }

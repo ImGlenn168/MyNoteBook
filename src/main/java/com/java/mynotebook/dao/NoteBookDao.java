@@ -43,11 +43,9 @@ public class NoteBookDao {
     }
 
     public int addNoteBook(NoteBook noteBook) {
-        System.out.println("打印成功NoteBookDao.addNoteBook.....");
         //?为占位符
         String sql = "insert into notebook(`word`, `meaning`, `sentence`, `notes`) values(?,?,?,?) ;";
         pstmt = DBUtil.getPreparedStatement(sql);
-        System.out.println(pstmt.toString());
         try {
             pstmt.setString(1, noteBook.getWord());
             pstmt.setString(2, noteBook.getMeaning());
@@ -65,15 +63,14 @@ public class NoteBookDao {
 
     public int updateNoteBook(NoteBook noteBook) {
         //?为占位符
-        String sql = "update notebook set id=?, word=? , meaning=? , sentence=? , notes=? where id=?;";
+        String sql = "update notebook set word=? , meaning=? , sentence=? , notes=? where id=?;";
         pstmt = DBUtil.getPreparedStatement(sql);
         try {
-            pstmt.setString(1, noteBook.getId());
-            pstmt.setString(2, noteBook.getWord());
-            pstmt.setString(3, noteBook.getMeaning());
-            pstmt.setString(4, noteBook.getSentence());
-            pstmt.setString(5, noteBook.getNotes());
-            pstmt.setString(6, String.valueOf(noteBook.getId()));
+            pstmt.setString(1, noteBook.getWord());
+            pstmt.setString(2, noteBook.getMeaning());
+            pstmt.setString(3, noteBook.getSentence());
+            pstmt.setString(4, noteBook.getNotes());
+            pstmt.setString(5, noteBook.getId());
             // 分割出sql，取第二部分 select * from customer where cname = 'xxx' ;
             String[] split = pstmt.toString().split(":");
             String sql2 = split[1];

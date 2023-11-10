@@ -1,6 +1,7 @@
-package com.java.mynotebook.controller;
+package com.java.mynotebook.controller.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.java.mynotebook.controller.api.NoteBookApi;
 import com.java.mynotebook.entity.NoteBook;
 import com.java.mynotebook.listener.EasyExcelListener;
 import com.java.mynotebook.service.NoteBookService;
@@ -27,19 +28,16 @@ public class NoteBookController implements NoteBookApi {
 
     @Override
     public Result updateNoteBook(NoteBook noteBook) {
-        System.out.println("NoteBookController.updateNoteBook.........");
         return Result.getResult(noteBookService.updateNoteBook(noteBook));
     }
 
     @Override
     public Result addNoteBook(NoteBook noteBook) {
-        System.out.println("NoteBookController.addNoteBook.........");
         return Result.getResult(noteBookService.addNoteBook(noteBook));
     }
 
     @Override
     public Result delNoteBook(List<Integer> ids) {
-        System.out.println("NoteBookController.delNoteBook: " + ids.toString());
         return Result.getResult(noteBookService.delNoteBook(ids));
     }
 
@@ -49,8 +47,8 @@ public class NoteBookController implements NoteBookApi {
     }
 
     @Override
-    public Result export(String param) {
-        return Result.success(noteBookService.export(param));
+    public Result export(String param, String path, String date) {
+        return Result.success(noteBookService.export(param, path, date));
     }
 
     @Override

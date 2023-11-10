@@ -25,7 +25,7 @@ public class ChatUI extends JFrame {
 
 
         setTitle("聊天窗口");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(600, 700);
         setLocation(700, 100);
 
@@ -98,21 +98,14 @@ public class ChatUI extends JFrame {
                     return;
                 }
                 chatArea.append("\n");
-                chatArea.append("  me" + ":  " + inputField.getText().trim());
+                chatArea.append("  ME" + ":  " + inputField.getText().trim());
                 System.out.println(inputField.getText().trim());
                 chatArea.append("\n");
-                chatArea.append("  gpt" + ":  " + sendMessageToGpt());
+                chatArea.append("  GPT" + ":  " + sendMessageToGpt());
                 chatArea.append("\n");
                 inputField.setText("");
             }
         });
 
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ChatUI window = new ChatUI();
-            window.sendMessage();
-        });
     }
 }
