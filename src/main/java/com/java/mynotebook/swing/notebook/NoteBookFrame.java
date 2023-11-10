@@ -56,6 +56,8 @@ public class NoteBookFrame extends JFrame {
      */
     public void addCom() {
         jTable = new JTable();
+        jTable.setShowGrid(true);
+        jTable.setGridColor(Color.green);
 
         // icon
 //        String imagePath = "E:\\WorkSpace\\Projects\\IdeaProjects\\MyNoteBook\\src\\main\\resources\\static\\image\\img.png";

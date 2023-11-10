@@ -53,7 +53,7 @@ public class ChatUI extends JFrame {
 
         add(panel);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
