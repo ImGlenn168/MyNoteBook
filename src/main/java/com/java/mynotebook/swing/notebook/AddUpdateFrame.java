@@ -22,7 +22,7 @@ public class AddUpdateFrame extends JFrame {
 
     private JTextArea meaning, sentence, notes;
 
-    private JButton confirm, cancel;
+    private JButton confirm, reset;
 
     private NoteBook noteBook;
 
@@ -94,8 +94,8 @@ public class AddUpdateFrame extends JFrame {
 
         confirm = new JButton("确定");
         confirm.setBounds(120, 360, 75, 30);
-        cancel = new JButton("取消");
-        cancel.setBounds(220, 360, 75, 30);
+        reset = new JButton("重置");
+        reset.setBounds(220, 360, 75, 30);
 
         if (type == 2) {
             id.setText(noteBook.getId());
@@ -116,7 +116,7 @@ public class AddUpdateFrame extends JFrame {
         add(sentence);
         add(notes);
         add(confirm);
-        add(cancel);
+        add(reset);
 
         addListener();
     }
@@ -136,10 +136,13 @@ public class AddUpdateFrame extends JFrame {
             }
         });
 
-        cancel.addActionListener(new ActionListener() {
+        reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                word.setText("");
+                meaning.setText("");
+                sentence.setText("");
+                notes.setText("");
             }
         });
     }

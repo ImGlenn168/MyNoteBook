@@ -57,7 +57,7 @@ public class NoteBookFrame extends JFrame {
     public void addCom() {
         jTable = new JTable();
         jTable.setShowGrid(true);
-        jTable.setGridColor(Color.green);
+        jTable.setGridColor(Color.lightGray);
 
         // icon
 //        String imagePath = "E:\\WorkSpace\\Projects\\IdeaProjects\\MyNoteBook\\src\\main\\resources\\static\\image\\img.png";
@@ -145,7 +145,6 @@ public class NoteBookFrame extends JFrame {
         // 居中显示数据
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
         // 设置表格数据模型
         jTable.setModel(NoteBookTableData.getModel(data));
         // 设置居中显示渲染器

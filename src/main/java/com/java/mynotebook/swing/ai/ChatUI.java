@@ -5,7 +5,6 @@ import com.java.mynotebook.service.ChatGptService;
 import com.java.mynotebook.swing.common.MsgFrame;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -89,7 +88,6 @@ public class ChatUI extends JFrame {
     }
 
     public void sendMessage() {
-
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +103,5 @@ public class ChatUI extends JFrame {
                 inputField.setText("");
             }
         });
-
     }
 }
